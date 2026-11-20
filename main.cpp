@@ -8,15 +8,8 @@
 using namespace sf;
 using namespace std;
 
+// Shayan
 const int BOARD_N = 10;
-const int TILE = 38;
-const int LEFT_BOARD_X = 60;
-const int RIGHT_BOARD_X = 560;
-const int BOARD_TOP = 115;
-
-const int SCR_SETUP = 1;
-const int SCR_FIGHT = 3;
-
 const int SHIP_COUNT = 5;
 vector<int> shipLengths = { 5, 4, 3, 3, 2 };
 
@@ -34,20 +27,31 @@ vector<int> p2Col(SHIP_COUNT, -1);
 vector<int> p1Dir(SHIP_COUNT, 0);
 vector<int> p2Dir(SHIP_COUNT, 0);
 
-int currentScreen = SCR_SETUP;
 int activePlayer = 0;
-int placingStep = 0;
-int placeDir = 0;
-
 bool singlePlayer = true;
 
-float curMouseX = 0.0f;
-float curMouseY = 0.0f;
+// Abbas
+const int TILE = 38;
+const int LEFT_BOARD_X = 60;
+const int RIGHT_BOARD_X = 560;
+const int BOARD_TOP = 115;
 
 RenderWindow app;
 Font mainFont;
 Clock totalClock;
 
+// Muneeb
+const int SCR_SETUP = 1;
+const int SCR_FIGHT = 3;
+
+int currentScreen = SCR_SETUP;
+int placingStep = 0;
+int placeDir = 0;
+
+float curMouseX = 0.0f;
+float curMouseY = 0.0f;
+
+// Shayan
 int getShipCell(int p, int r, int c)
 {
     if (p == 0)
@@ -195,6 +199,7 @@ int countAliveShips(int p)
     return alive;
 }
 
+// Muneeb
 bool canPlaceHere(int p, int startR, int startC, int len, int dir)
 {
     if (startR < 0 || startC < 0)
@@ -257,6 +262,7 @@ void writeShipToGrid(int p, int id, int startR, int startC, int dir)
     }
 }
 
+// Abbas
 void drawStr(string msg, float x, float y, int sz, Color col)
 {
     Text label(mainFont, msg, sz);
@@ -283,6 +289,7 @@ void fillBox(float x, float y, float w, float h, Color col)
     app.draw(r);
 }
 
+// Muneeb
 bool mouseToGrid(int bx, int by, int& outR, int& outC)
 {
     int c = (int)floor((curMouseX - (float)bx) / (float)TILE);
@@ -298,6 +305,7 @@ bool mouseToGrid(int bx, int by, int& outR, int& outC)
     return true;
 }
 
+// Abbas
 void drawVessel(float x, float y, int len, int dir, Color bodyCol)
 {
     float span = (float)(len * TILE);
@@ -420,6 +428,7 @@ void drawBoard(int p, int bx, int by, bool revealAll, float t)
     }
 }
 
+// Muneeb
 void drawGhostPreview(int bx, int by, int p, int len, int dir)
 {
     int r = 0;
@@ -457,6 +466,7 @@ void drawGhostPreview(int bx, int by, int p, int len, int dir)
     }
 }
 
+// Abbas
 void renderSetup(float t)
 {
     string header = getName(activePlayer) + " - Ship " + to_string(placingStep + 1)
@@ -513,6 +523,7 @@ void renderBattle(float t)
     }
 }
 
+// Muneeb
 void clickSetup(bool leftBtn)
 {
     if (!leftBtn)
@@ -560,6 +571,7 @@ void handleKeyPress(Keyboard::Key key)
     }
 }
 
+// Abbas
 bool loadSystemFont()
 {
     vector<string> paths = {
@@ -581,6 +593,7 @@ bool loadSystemFont()
 
 int main()
 {
+    // Abbas
     app.create(VideoMode({ 1000, 600 }), "Battleships", Style::Titlebar | Style::Close);
     app.setFramerateLimit(60);
 
@@ -589,12 +602,15 @@ int main()
         return 1;
     }
 
+    // Shayan
     clearMatchData();
 
+    // Abbas
     while (app.isOpen())
     {
         float elapsed = totalClock.getElapsedTime().asSeconds();
 
+        // Muneeb
         Vector2i mpos = Mouse::getPosition(app);
         curMouseX = (float)mpos.x;
         curMouseY = (float)mpos.y;
@@ -624,6 +640,7 @@ int main()
             ev = app.pollEvent();
         }
 
+        // Abbas
         app.clear(Color(10, 20, 42));
 
         switch (currentScreen)
@@ -641,3 +658,4 @@ int main()
 
     return 0;
 }
+
